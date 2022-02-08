@@ -2,6 +2,12 @@
 print("content-type: text/html; charset=utf-8\n")
 print()
 import cgi
+import os
+
+files = os.listdir('data')
+listStr = ''
+for item in files:
+    listStr = listStr + '<li><a href="index.py?id={name}">{name}</a></li>'.format(name=item)
 
 form = cgi.FieldStorage()
 if 'id' in form:
@@ -20,13 +26,10 @@ print('''
 <body>
   <h1><a href="index.py">WEB</a></h1>
   <ol>
-    <li><a href="index.py?id=HTML">HTML</a></li>
-    <li><a href="index.py?id=CSS">CSS</a></li>
-    <li><a href="index.py?id=JavaScript">JavaScript</a></li>
-    <li><a href="index.py?id=Python">Python</a></li>
+    {listStr}
   </ol>
   <h2>{title}</h2>
   <p>{desc}</p>
 </body>
 </html>
-'''.format(title=pageId, desc=description))
+'''.format(title=pageId, desc=description, listStr=listStr))
